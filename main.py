@@ -6,6 +6,7 @@ from constants import WHITE, RED, BACKGROUND,TEXT_COLOR, BUTTON_COLOR,\
 
 screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))  # Set up the display
 pygame.display.set_caption("Add 3 or 5")  # Title
+isMaximizing = None
 
 
 def drawText(text, font, color, x, y):  # Funkcija ļauj vienkārši uz ekrāna izvadīt tekstu
@@ -23,6 +24,7 @@ def drawBoard(number):  # Spēles lauka izveidošana
 
 
 def chooseStarter():
+    global isMaximizing
     pygame.draw.rect(screen, BUTTON_COLOR, Buttons.player)  # player poga
     screen.blit(Buttons.player_text, Buttons.player.midleft)
 
@@ -47,11 +49,13 @@ def chooseStarter():
                     pygame.display.update()
                     pygame.time.delay(500)
                     starter = 1  # Spēli sāk lietotājs
+                    isMaximizing = True
                 elif Buttons.computer.collidepoint(event.pos):
                     pygame.draw.rect(screen, BUTTON_PRESSED_COLOR, Buttons.computer)
                     screen.blit(Buttons.computer_text, Buttons.computer.midleft)
                     pygame.display.update()
                     pygame.time.delay(500)
+                    isMaximizing = False
                     starter = 2  # Spēli sāk dators
 
     if starter == 1: return True
@@ -107,6 +111,7 @@ def alphaBeta(pos, depth, alpha, beta, isMaximizing):
         return minEval
 
 def getComputerMove(number):
+    global isMaximizing
     bestMove = None
     bestVal = -float('inf')
     alpha = -float('inf')
@@ -114,7 +119,7 @@ def getComputerMove(number):
 
     for i in (3, 5):
         if number + i <= 43:
-            val = alphaBeta(number + i, 3, alpha, beta, False)
+            val = alphaBeta(number + i, 3, alpha, beta, isMaximizing)
             if val > bestVal:
                 bestVal = val
                 bestMove = i
