@@ -19,6 +19,6 @@ BUTTON_WIDTH = 100
 BUTTON_HEIGHT = 50
 BUTTON_MARGIN = 20
 
-FONT_SMALL = pygame.font.SysFont("Fixed Sys", 20)  # Define fonts
+FONT_SMALL = pygame.font.SysFont("Fixed Sys", 20)
 FONT_MEDIUM = pygame.font.SysFont("Fixed Sys", 30)
 FONT_LARGE = pygame.font.SysFont("Fixed Sys", 40)
